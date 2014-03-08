@@ -1,18 +1,14 @@
 # NAME
 
-App::try - a handful network scan swiss tool
+App::pscan - a handful network scan swiss tool
 
 # SYNOPSIS
 
-    $ try [scantype] [iprange]:[port range]
+    $ pscan [scantype] [iprange]:[port range]
 
 # DESCRIPTION
 
-App::try is a small POE network scanner, it scan tcp/udp protocol of the specified range
-
-# STATUS
-
-CI: [![Build Status](https://travis-ci.org/mudler/App-try.png?branch=master)](https://travis-ci.org/mudler/App-try)
+App::pscan is a small POE network scanner, it scan tcp/udp protocol of the specified range
 
 # OPTIONS
 
