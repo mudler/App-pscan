@@ -1,0 +1,10 @@
+Revision history for App-pscan
+
+{{$NEXT}}
+
+0.0.2
+	- Can send payloads to nodes (-p or --payload option)
+	- enhanced output
+	- fixed udp scan stop
+0.0.1
+        - Initial release
