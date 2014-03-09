@@ -33,6 +33,7 @@ sub options {
 
 sub scan {
     my $self = shift;
+    die("No port given") unless (exists $self->{'first'});
     info 'UDP for '
         . $self->{'IP'}->ip()
         . ' port range: '

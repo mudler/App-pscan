@@ -33,13 +33,14 @@ sub options {
 
 sub scan() {
     my $self = shift;
+    die("No port given") unless (exists $self->{'first'});
     info 'TCP for '
         . $self->{'IP'}->ip()
         . ' port range: '
         . $self->{'first'} . "-"
         . $self->{'last'};
 
-    my $Payload = $self->{'payload'} || "";
+    my $Payload = $self->{'payload'} || "This is a test by App::pscan";
     info 'Payload: '.$Payload;
     do {
         for ( $self->{'first'} .. $self->{'last'} ) {

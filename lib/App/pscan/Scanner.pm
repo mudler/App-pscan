@@ -1,7 +1,8 @@
 package App::pscan::Scanner;
+use warnings;
+use strict;
 use Net::IP;
 use App::pscan::Utils;
-
 
 sub run {
     my $self = shift;
@@ -12,42 +13,30 @@ sub run {
 
 sub _gen_range() {
     my $self = shift;
-    my $cmd=shift;
-    my $Ip;
-    my $Port;
-    if($cmd=~/:/){
-         ( $Ip, $Port ) = split( /:/, $cmd );
-
-    } else {
-        $Ip=$cmd;
-    }
+    my $cmd  = shift;
+    my ( $Ip, $Port )
+        = ( defined($cmd) and $cmd =~ /:/ )
+        ? split( /:/, $cmd )
+        : ( $cmd, undef );
 
     if ( my $IP = new Net::IP($Ip) ) {
-        $Ip=$IP;
-
+        $Ip = $IP;
     }
-    else {
-        info "Resolving $Ip";
+    elsif ( defined($Ip) ) {
+        info "<? Resolving ?> $Ip";
         $Ip = resolve($Ip);
-        $Ip =new Net::IP($Ip);
+        $Ip = new Net::IP($Ip);
     }
 
-    if ( !defined($Ip) ) {
-        error "! No ip to scan";
-        exit;
-    } else {
-            info '- starting scan -';
-
+    die( error "-## No ip/hostname to scan ##-" ) if ( !defined($Ip) );
+    $self->{'IP'} = $Ip;
+    info '-> starting scan <-';
+    if ($Port) {
+        my ( $f, $l ) = generate_ports($Port);
+        $self->{'first'} = $f;
+        $self->{'last'}  = $l;
+        info 'Scanning for ' . ( ( $l + 1 ) - $f ) . ' port(s)';
     }
-
-    my ( $f, $l ) = generate_ports($Port) if $Port;
-
-    info 'Scanning for ' . ( ( $l + 1 ) - $f ) . ' port(s)' if $Port;
-
-    $self->{'IP'}    = $Ip;
-    $self->{'first'} = $f if $Port;
-    $self->{'last'}  = $l if $Port;
-
 }
 
 1;

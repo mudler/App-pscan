@@ -1,4 +1,6 @@
 package App::pscan::Command;
+use warnings;
+use strict;
 use App::pscan;
 use base qw(App::CLI App::CLI::Command);
 
